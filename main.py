@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
+"""######################### Подготовка драйвера и сайта для парсинга ###################################"""
 url = 'https://reestr.nostroy.ru'
 # Автоматическое получение текущей версии драйвера для браузера Chrome установленного в системе,
 # не нужно скачивать и хранить его в проекте
@@ -12,9 +13,10 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.maximize_window()
 # Время ожидания любого элемента, если переход между страницами тормозит
 driver.implicitly_wait(1)
-
 # Открываем страницу с помощью драйвера
 driver.get(url)
+"""#######################*********************************************####################################"""
+
 
 # Базовый путь для выбора страницы, в дальнейшем строка форматируется с подставлением номера страницы в [text() = '{}']
 base_xpath_for_select_page = "//*[@id='members-form']/div[2]/ul//*[text() = '{}']"
@@ -22,6 +24,8 @@ base_xpath_for_select_page = "//*[@id='members-form']/div[2]/ul//*[text() = '{}'
 base_xpath_for_element = "//*[@id='members']/table/tbody/tr[{}]/td[{}]"
 # Полный xpath по которому находится телефонный номер
 xpath_number = "//*[@id='block-content-open-client']/div/div[1]/div[8]/div[2]"
+
+
 # Начальный словарь куда будут сохраняться данные
 parse_data = dict(dict())
 
@@ -77,4 +81,5 @@ print(parse_data[1])
 # Вывод конкретного параметра из спарсенной строки
 print(parse_data[6]['reg_number'])
 
+# Закрываем драйвер после выполнения программы
 driver.quit()
