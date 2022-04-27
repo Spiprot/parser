@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
+from bitrix24 import *
 
 from NewCRMcheck import new_CRM_check
 
@@ -44,7 +45,7 @@ def get_element_by_column_in_line(current_line: int, column: int) -> str:
 
 pop_strings = 0
 
-for page in range(1, 3):
+for page in range(1, 2):
     f"Перебираем диапазон от 1 до 16 страницы(всего страниц)"
     driver.find_element(By.XPATH, base_xpath_for_select_page.format(page)).click()
     for line in range(1, 21):
@@ -91,7 +92,7 @@ for item in parse_data.items():
 # Вывод конкретной спарсенной строки
 print(parse_data[1])
 
-# Вывод конличества организаций ИНН которых уже было в системе и мы их не записали
+# Вывод количества организаций ИНН которых уже было в системе и мы их не записали
 print(pop_strings)
 
 # Вывод конкретного параметра из спарсенной строки
@@ -100,3 +101,32 @@ print(parse_data[1]['ceo'])
 # Закрываем драйвер после выполнения программы
 driver.quit()
 # firefox_driver.quit()
+
+for string in parse_data.items():
+    for item in string:
+        print(item)
+
+assignLead(
+    bx_24=bx24,
+    company_inn="",
+    get_main_all="",
+    managers="",
+    eruz_member_link="",
+    eruz_registry_date="",
+    nalog_reg_date= "",
+    tip_uchastnika="",
+    boss_title="",
+    boss_full_name="",
+    boss_last_name="",
+    boss_first_name="",
+    boss_second_name="",
+    company_email="",
+    full_company_name="",
+    short_company_name="",
+    company_address="",
+    company_cell="",
+    company_phone="",
+    company_site="",
+    cased_names_one="",
+    cased_names_two=""
+)
