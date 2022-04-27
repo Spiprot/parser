@@ -44,7 +44,7 @@ def get_element_by_column_in_line(current_line: int, column: int) -> str:
 
 pop_strings = 0
 
-for page in range(1, 17573):
+for page in range(1, 3):
     f"Перебираем диапазон от 1 до 16 страницы(всего страниц)"
     driver.find_element(By.XPATH, base_xpath_for_select_page.format(page)).click()
     for line in range(1, 21):

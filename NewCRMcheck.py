@@ -5,7 +5,6 @@ base_inn_url = "https://crm-new.featureddata.com/api/v1/companies?filter.taxPaye
 
 
 def new_CRM_check(inn):
-    lead_exist = False
     auth_code = f"Bearer {access_token}"
     response = requests.get(
         base_inn_url.format(inn),
