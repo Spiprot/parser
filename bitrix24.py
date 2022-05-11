@@ -1,21 +1,23 @@
 from random import random
 
-from bitrix24 import *
-from fast_bitrix24 import *
+
+from fast_bitrix24.bitrix import Bitrix
 
 bx24 = Bitrix('https://expertcentre.bitrix24.ru/rest/104/9vtz15qiyfngaywx/')
 
 
 # FUNCTION ASSIGNS LEAD TO MANAGER
 def assignLead(
-        bx_24, company_inn, get_main_all, managers, eruz_member_link, eruz_registry_date, nalog_reg_date,
-        tip_uchastnika, boss_title, boss_full_name, boss_last_name, boss_first_name, boss_second_name, company_email,
-        full_company_name, short_company_name, company_address, company_cell, company_phone, company_site,
-        cased_names_one, cased_names_two):
+        bx_24=bx24, company_inn="", get_main_all="", managers="", eruz_member_link="", eruz_registry_date="", nalog_reg_date="",
+        tip_uchastnika="", boss_title="", boss_full_name="", boss_last_name="", boss_first_name="", boss_second_name="",
+        company_email="", full_company_name="", short_company_name="", company_address="", company_cell="",
+        company_phone="", company_site="", cased_names_one="", cased_names_two=""
+):
     print(
         company_inn, get_main_all, managers, eruz_member_link, eruz_registry_date, nalog_reg_date, tip_uchastnika,
         boss_title, boss_full_name, boss_last_name, boss_first_name, boss_second_name, company_email, full_company_name,
-        short_company_name, company_address, company_cell, company_phone, company_site)
+        short_company_name, company_address, company_cell, company_phone, company_site
+    )
     region = company_inn[:2]
 
     if get_main_all:
@@ -147,7 +149,7 @@ def assignLead(
                     fields={
                         'TITLE': title,
                         'ASSIGNED_BY_ID': current_user_bitrix_id,
-                        'CREATED_DY_ID': created_by_id,
+                        'CREATED_BY_ID': created_by_id,
                         'SOURCE_DESCRIPTION': source_description,
                         'EMAIL': [
                             {

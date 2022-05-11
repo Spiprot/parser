@@ -54,10 +54,7 @@ for page in range(1, 2):
             # Проверяем есть ли текущая строка line на странице (столбец выбран любой, в данном случае 1)
             # Если строка найдена, то наполняем словарь, иначе ничего не делаем
             driver.find_element(By.XPATH, base_xpath_for_element.format(line, 1))
-
-            if (
-                    not new_CRM_check(get_element_by_column_in_line(line, 3))
-            ) and get_element_by_column_in_line(line, 5) == 'Является членом':
+            if not new_CRM_check(get_element_by_column_in_line(line, 3)):
                 # В словарь добавляем элемент с номером текущей линии parse_data[line], в которую кладем вложенный
                 # словарь с параметрами строки. Строка неизменна, а столбец меняется от 1 до 6. (page-1)*20 учитывает
                 # текущую страницу
@@ -70,6 +67,11 @@ for page in range(1, 2):
                     'type': get_element_by_column_in_line(line, 6),
                     'reg_number': get_element_by_column_in_line(line, 7)
                 }
+
+                full_company_name = get_element_by_column_in_line(line, 1)
+                short_company_name = get_element_by_column_in_line(line, 2)
+                company_inn = get_element_by_column_in_line(line, 3)
+
                 # Переходим внутрь строки, чтобы получить номер телефона, кликаем по элементу с текущей строки line
                 # и любым номером столбца, в данном случае столбец = 1
                 driver.find_element(By.XPATH, base_xpath_for_element.format(line, 1)).click()
@@ -78,6 +80,19 @@ for page in range(1, 2):
                     By.XPATH, xpath_number
                 ).text
                 parse_data[line + (page - 1) * 20 - pop_strings]['ceo'] = driver.find_element(By.XPATH, xpath_ceo).text
+                company_phone = driver.find_element(By.XPATH, xpath_number).text
+                boss_full_name = driver.find_element(By.XPATH, xpath_ceo).text
+                # boss_last_name, boss_first_name, boss_second_name = boss_full_name.split()[1:4]
+                assignLead(
+                    company_inn=company_inn,
+                    boss_full_name=boss_full_name,
+                    # boss_last_name=boss_last_name,
+                    # boss_first_name=boss_first_name,
+                    # boss_second_name=boss_second_name,
+                    full_company_name=full_company_name,
+                    short_company_name=short_company_name,
+                    company_phone=company_phone,
+                )
                 # Возвращаемся на общую страницу с данными
                 driver.back()
             else:
@@ -105,28 +120,3 @@ driver.quit()
 for string in parse_data.items():
     for item in string:
         print(item)
-
-assignLead(
-    bx_24=bx24,
-    company_inn="",
-    get_main_all="",
-    managers="",
-    eruz_member_link="",
-    eruz_registry_date="",
-    nalog_reg_date= "",
-    tip_uchastnika="",
-    boss_title="",
-    boss_full_name="",
-    boss_last_name="",
-    boss_first_name="",
-    boss_second_name="",
-    company_email="",
-    full_company_name="",
-    short_company_name="",
-    company_address="",
-    company_cell="",
-    company_phone="",
-    company_site="",
-    cased_names_one="",
-    cased_names_two=""
-)
